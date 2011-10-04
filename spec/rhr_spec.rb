@@ -20,8 +20,11 @@ describe RHR do
   describe 'server' do
     include Rack::Test::Methods
 
+    before :all do
+      Dir.chdir 'spec/site'
+    end
+
     def app
-      Dir.chdir 'spec/site/'
       RHR::Server.new
     end
 
@@ -32,15 +35,19 @@ describe RHR do
 
     it "evaluates erb files" do
       get '/index.erb'
-      last_response.should == 'TEST'
+      last_response.body.should == 'TEST'
     end
 
     it "can get static files" do
       get '/plain.html'
-      last_response.should == 'TEST'
+      last_response.body.should == "<%= 'TEST' %>\n"
     end
 
     it "can get nested index.erb"
     it "can get static files with correct content-type"
+    it "ignores common ruby files"
+    it "ignores _files"
+    it "ignores .files"
+    it "ignores _folders"
   end
 end

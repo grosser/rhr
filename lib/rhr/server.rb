@@ -7,7 +7,11 @@ module RHR
     def call(env)
       path = env['PATH_INFO']
       body = if template = find_template(path)
-        File.read(template)
+        if renderer = Tilt[template]
+          renderer.new(template).render
+        else
+          File.read(template)
+        end
       else
         'OOOPS'
       end

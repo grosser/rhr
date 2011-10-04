@@ -8,10 +8,12 @@ Usage
 =====
     echo 'Hello <%= "RHR" %>' > index.erb
     rhr server
-
     --> http://localhost:3000
+    --> http://localhost:3000/index.erb
 
-Author
+ - Supports [Erb, Haml, Liquid, ... everything](https://github.com/rtomayko/tilt)
+ - Does not serve Rakefile / Gemfile / Gemfile.lock + everything starting with `_` or `.`
+
 ======
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>

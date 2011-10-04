@@ -9,4 +9,5 @@ Gem::Specification.new "rhr", RHR::VERSION do |s|
   s.files = `git ls-files`.split("\n")
 
   s.add_dependency 'rack'
+  s.add_dependency 'tilt'
 end
