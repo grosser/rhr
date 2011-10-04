@@ -6,25 +6,35 @@ module RHR
 
     def call(env)
       path = env['PATH_INFO']
-      body = if template = find_template(path)
-        if renderer = Tilt[template]
+      if template = find_template(path)
+        body = if renderer = Tilt[template]
           renderer.new(template).render
         else
           File.read(template)
         end
+        [200, {}, [body]]
       else
-        'OOOPS'
+        [404, {}, ['404 File not found']]
       end
-      return [200, {}, [body]]
     end
 
   private
 
     def find_template(path)
-      if path == '/'
-        @files.detect{|f| f =~ /^index\.[a-z]+$/i }
+      file = path.dup
+      file.sub!('/','')
+      file.sub!(/\/$/,'')
+      is_root = (file == '')
+
+      return if not is_root and not @files.index(file)
+
+      if is_root or File.directory?(file)
+        # folder -> find an index file
+        file << '/' unless is_root
+        @files.grep(/^#{Regexp.escape file}index\.[^\/]+$/).first
       else
-        path.sub('/','')
+        # just another normal template
+        file
       end
     end
   end

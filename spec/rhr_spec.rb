@@ -43,7 +43,21 @@ describe RHR do
       last_response.body.should == "<%= 'TEST' %>\n"
     end
 
-    it "can get nested index.erb"
+    it "does not server monkey paths" do
+      get '/xxx/../plain.html'
+      last_response.status.should == 404
+    end
+
+    it "can get nested index.erb" do
+      get '/xxx'
+      last_response.body.should == "NESTED"
+    end
+
+    it "can get nested index.erb with trailing slash" do
+      get '/xxx/'
+      last_response.body.should == "NESTED"
+    end
+
     it "can get static files with correct content-type"
     it "ignores common ruby files"
     it "ignores _files"
