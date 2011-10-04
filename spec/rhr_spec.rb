@@ -74,8 +74,24 @@ describe RHR do
       last_response.status.should == 404
     end
 
-    it "ignores _files"
-    it "ignores .files"
-    it "ignores _folders"
+    it "ignores _files" do
+      get "/_hidden.html"
+      last_response.status.should == 404
+    end
+
+    it "ignores .files" do
+      get "/.hidden.html"
+      last_response.status.should == 404
+    end
+
+    it "ignores hidden folders" do
+      get "/_hidden/xxx.html"
+      last_response.status.should == 404
+    end
+
+    it "ignores nested hidden" do
+      get "/xxx/.hidden.html"
+      last_response.status.should == 404
+    end
   end
 end

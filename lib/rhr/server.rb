@@ -2,6 +2,7 @@ module RHR
   class Server
     def initialize
       @files = Dir["**/*"] - ['Gemfile','Gemfile.lock','Rakefile']
+      @files -= @files.grep(/(^|\/)_/)
     end
 
     def call(env)
