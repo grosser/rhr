@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+require 'optparse'
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+
+def parse_options
+  options = {}
+  parser = OptionParser.new do |opts|
+    opts.banner = <<BANNER
+Ruby Hypertext Refinement
+
+Usage:
+    echo 'Hello <%= "RHR" %>' > index.erb
+    rhr server
+    --> http://localhost:3000
+
+Options:
+BANNER
+    opts.on("-p", "--port PORT","Port for server") {|i| options[:port] = i }
+    opts.on("-v", "--version","Show Version"){
+      require 'rhr/version'
+      puts RHR::VERSION
+      exit
+    }
+    opts.on("-h", "--help","Show this.") { puts opts; exit }
+  end
+  parser.parse!
+
+  if ARGV.empty?
+    puts parser
+    exit
+  end
+
+  options
+end
+
+options = parse_options

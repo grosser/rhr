@@ -3,14 +3,13 @@ Ruby Hypertext Refinements -- the ease of PHP with the elegance of Ruby
 Install
 =======
     sudo gem install rhr
-Or
-
-    rails plugin install git://github.com/grosser/rhr.git
-
 
 Usage
 =====
-    CODE EXAMPLE
+    echo 'Hello <%= "RHR" %>' > index.erb
+    rhr server
+
+    --> http://localhost:3000
 
 Author
 ======
