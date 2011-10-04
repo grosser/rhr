@@ -2,6 +2,11 @@ task :default do
   sh "rspec spec/"
 end
 
+desc "start the test-server"
+task :server do
+  sh "cd spec/site && ../../bin/rhr server"
+end
+
 rule /^version:bump:.*/ do |t|
   sh "git status | grep 'nothing to commit'" # ensure we are not dirty
   index = ['major', 'minor','patch'].index(t.name.split(':').last)
