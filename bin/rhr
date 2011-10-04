@@ -36,11 +36,12 @@ BANNER
 end
 
 options = parse_options
-command = ARGV.shift or raise('did you forget "server" ?')
+ARGV.shift == 'server' or raise('did you forget "server" ?')
 
 require 'rhr'
 
-Rack::Handler::WEBrick.run(
-  RHR::Server.new,
-  :Port => options[:port] || 3000
-)
+Rack::Server.new(
+  :app => RHR::Server.new,
+  :Port => options[:port] || 3000,
+  :server => 'webrick'
+).start
