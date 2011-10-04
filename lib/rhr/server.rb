@@ -1,7 +1,7 @@
 module RHR
   class Server
     def initialize
-      @files = Dir["**/*"]
+      @files = Dir["**/*"] - ['Gemfile','Gemfile.lock','Rakefile']
     end
 
     def call(env)

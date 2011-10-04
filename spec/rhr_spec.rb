@@ -69,7 +69,11 @@ describe RHR do
       last_response.content_type.should == 'image/jpeg'
     end
 
-    it "ignores common ruby files"
+    it "ignores common ruby files" do
+      get "/Gemfile"
+      last_response.status.should == 404
+    end
+
     it "ignores _files"
     it "ignores .files"
     it "ignores _folders"
