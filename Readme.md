@@ -1,4 +1,4 @@
-Ruby Hypertext Refinements -- the ease of PHP with the elegance of Ruby
+Ruby Hypertext Refinement -- the ease of PHP with the elegance of Ruby
 
 Install
 =======
@@ -14,7 +14,10 @@ Usage
  - Supports [Erb, Haml, Liquid, ... everything](https://github.com/rtomayko/tilt)
  - Does not serve Rakefile / Gemfile / Gemfile.lock + everything starting with `_` or `.`
 
+Author
 ======
+Initial (crazy) idea by [Steffen Schröder](https://github.com/ChaosSteffen)
+
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
 Hereby placed under public domain, do what you want, just do not hold me accountable...<br/>
