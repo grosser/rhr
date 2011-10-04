@@ -7,4 +7,6 @@ Gem::Specification.new "rhr", RHR::VERSION do |s|
   s.email = "michael@grosser.it"
   s.homepage = "http://github.com/grosser/rhr"
   s.files = `git ls-files`.split("\n")
+
+  s.add_dependency 'rack'
 end

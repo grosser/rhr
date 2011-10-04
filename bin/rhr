@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
+require 'rubygems'
 require 'optparse'
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
@@ -35,3 +36,11 @@ BANNER
 end
 
 options = parse_options
+command = ARGV.shift or raise('did you forget "server" ?')
+
+require 'rhr'
+
+Rack::Handler::WEBrick.run(
+  RHR::Server.new,
+  :Port => options[:port] || 3000
+)

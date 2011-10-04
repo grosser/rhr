@@ -18,23 +18,29 @@ describe RHR do
   end
 
   describe 'server' do
-    before :all do
-      @port = 5243
-      Thread.new do
-        rhr "server --port #{@port}"
-      end
+    include Rack::Test::Methods
+
+    def app
+      Dir.chdir 'spec/site/'
+      RHR::Server.new
     end
 
     it "can get /" do
-      `curl "http://localhost:#{@port}"`.should == 'TEST'
+      get '/'
+      last_response.body.should == 'TEST'
     end
 
-    it "can get index.erb" do
-      `curl "http://localhost:#{@port}/index.erb"`.should == 'TEST'
+    it "evaluates erb files" do
+      get '/index.erb'
+      last_response.should == 'TEST'
     end
 
-    it "can get plain html" do
-      `curl "http://localhost:#{@port}/plain.html"`.should == "<%= 'TEST' %>"
+    it "can get static files" do
+      get '/plain.html'
+      last_response.should == 'TEST'
     end
+
+    it "can get nested index.erb"
+    it "can get static files with correct content-type"
   end
 end
