@@ -36,6 +36,7 @@ describe RHR do
     it "evaluates erb files" do
       get '/index.erb'
       last_response.body.should == 'TEST'
+      last_response.content_type.should == 'text/html'
     end
 
     it "can get static files" do
@@ -58,7 +59,16 @@ describe RHR do
       last_response.body.should == "NESTED"
     end
 
-    it "can get static files with correct content-type"
+    it "can get nested index without template language" do
+      get '/yyy'
+      last_response.body.should == "Foo\n"
+    end
+
+    it "can get static files with correct content-type" do
+      get "/people.jpg"
+      last_response.content_type.should == 'image/jpeg'
+    end
+
     it "ignores common ruby files"
     it "ignores _files"
     it "ignores .files"

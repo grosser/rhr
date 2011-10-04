@@ -7,12 +7,12 @@ module RHR
     def call(env)
       path = env['PATH_INFO']
       if template = find_template(path)
-        body = if renderer = Tilt[template]
-          renderer.new(template).render
+        if renderer = Tilt[template]
+          body = renderer.new(template).render
+          [200, {}, [body]]
         else
-          File.read(template)
+          Rack::File.new('.').call(env.merge('PATH_INFO' => template))
         end
-        [200, {}, [body]]
       else
         [404, {}, ['404 File not found']]
       end
