@@ -6,13 +6,19 @@ Install
 
 Usage
 =====
-    echo 'Hello <%= "RHR" %>' > index.erb
+    echo 'Hello <%= params["name"] || "RHR" %>' > index.erb
     rhr server
     --> http://localhost:3000
-    --> http://localhost:3000/index.erb
+    --> http://localhost:3000/index.erb?name=World
 
  - Supports [Erb, Haml, Liquid, ... everything](https://github.com/rtomayko/tilt)
  - Does not serve Rakefile / Gemfile / Gemfile.lock + everything starting with `_` or `.`
+
+TODO (fork!)
+====
+ - use _layout.erb files as layout unless view does something like `no_layout`
+ - add helpers like link_to / tag / form
+ - escape html in params <-> xss
 
 Author
 ======
