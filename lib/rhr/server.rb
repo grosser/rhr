@@ -9,7 +9,9 @@ module RHR
       path = env['PATH_INFO']
       if template = find_template(path)
         if renderer = Tilt[template]
-          body = renderer.new(template).render
+          request = Rack::Request.new(env)
+          params = request.GET.merge(request.POST)
+          body = renderer.new(template).render(nil, :request => request, :params => params)
           [200, {}, [body]]
         else
           Rack::File.new('.').call(env.merge('PATH_INFO' => template))

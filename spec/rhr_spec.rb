@@ -93,5 +93,20 @@ describe RHR do
       get "/xxx/.hidden.html"
       last_response.status.should == 404
     end
+
+    it "passes env" do
+      get "/xxx/env.erb"
+      last_response.body.should == "/xxx/env.erb"
+    end
+
+    it "passes get params" do
+      get "/xxx/params.erb?x=1&a%20b=b%20c"
+      last_response.body.should == "[[\"a b\", \"b c\"], [\"x\", \"1\"]]"
+    end
+
+    it "passes merged post and get params" do
+      post "/xxx/params.erb?a=1&b=2", {'b' => 3}
+      last_response.body.should == "[[\"a\", \"1\"], [\"b\", \"3\"]]"
+    end
   end
 end
