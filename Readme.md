@@ -16,7 +16,7 @@ Usage
 
 TODO (fork!)
 ====
- - use _layout.erb files as layout unless view does something like `no_layout`
+ - ~~use _layout.erb files as layout~~ unless view does something like `no_layout`
  - add helpers like link_to / tag / form
  - escape html in params <-> xss
 
