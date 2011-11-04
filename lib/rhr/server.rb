@@ -11,7 +11,13 @@ module RHR
         if renderer = Tilt[template]
           request = Rack::Request.new(env)
           params = request.GET.merge(request.POST)
+
           body = renderer.new(template).render(nil, :request => request, :params => params)
+
+          if layout = find_layout
+            body = renderer.new(layout).render(nil, :request => request, :params => params) { body }
+          end
+
           [200, {}, [body]]
         else
           Rack::File.new('.').call(env.merge('PATH_INFO' => template))
@@ -22,6 +28,10 @@ module RHR
     end
 
   private
+
+    def find_layout
+      Dir['*'].grep(/_layout/).first
+    end
 
     def find_template(path)
       file = path.dup
