@@ -125,6 +125,12 @@ describe RHR do
         get '/'
         last_response.body.should == "<div>TEST</div>"
       end
+
+      it 'does not render non-layout files' do
+        write 'no_layout.erb', '<div><%= yield %></div>'
+        get '/'
+        last_response.body.should == "TEST"
+      end
     end
   end
 end

@@ -30,7 +30,7 @@ module RHR
   private
 
     def find_layout
-      Dir['*'].grep(/_layout/).first
+      Dir['*'].grep(/^_layout(\.|$)/).first
     end
 
     def find_template(path)
