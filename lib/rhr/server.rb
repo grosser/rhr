@@ -1,3 +1,5 @@
+require 'rhr/core_ext/object'
+
 module RHR
   class Server
     def initialize
@@ -32,6 +34,7 @@ module RHR
     def find_layout
       Dir['*'].grep(/^_layout(\.|$)/).first
     end
+    memoize :find_layout
 
     def find_template(path)
       file = path.dup
@@ -50,5 +53,6 @@ module RHR
         file
       end
     end
+    memoize :find_template
   end
 end
