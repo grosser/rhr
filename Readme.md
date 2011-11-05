@@ -17,25 +17,28 @@ Usage
 Layouting
 =========
 
- You can put a _layout.<FORMAT> file into the root of the project in order to define a special layout
- for all of the other pages. Insert a ```yield``` for your page's content:
+ Put a _layout.<FORMAT> file into the root of the project.
+ All pages will be rendered in the `yield`.
 
     <html>
       <head>
-        <title></title>
+        <title>Amazing</title>
       </head>
       <body><%= yield %></body>
     </html>
 
 TODO (fork!)
 ====
- - ~~use _layout.erb files as layout~~ unless view does something like `no_layout`
+ - do not use layout if view does something like `no_layout`
  - add helpers like link_to / tag / form
  - escape html in params <-> xss
 
 Author
 ======
 Initial (crazy) idea by [Steffen Schröder](https://github.com/ChaosSteffen)
+
+### [Contributors](http://github.com/grosser/rhr/contributors)
+ - [Sascha Depold](http://github.com/sdeplod)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
