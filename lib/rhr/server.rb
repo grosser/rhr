@@ -4,9 +4,9 @@ require 'rhr/core_ext/object'
 module RHR
   class Server
     def initialize
-      @all_files = Dir["**/*"]
-      @files = @all_files - %w[Gemfile Gemfile.lock Rakefile helpers.rb]
-      @files -= @files.grep(/(^|\/)_/)
+      @files = Dir["**/*"]
+      @servable_files = @files - %w[Gemfile Gemfile.lock Rakefile helpers.rb]
+      @servable_files -= @servable_files.grep(/(^|\/)_/)
     end
 
     def call(env)
@@ -36,7 +36,7 @@ module RHR
 
     def build_view
       view = View.new
-      if @all_files.include?('helpers.rb')
+      if @files.include?('helpers.rb')
         require './helpers'
         view.send(:extend, Helpers)
       end
@@ -44,7 +44,7 @@ module RHR
     end
 
     def find_layout
-      Dir['*'].grep(/^_layout(\.|$)/).first
+      @files.grep(/^_layout(\.|$)/).first
     end
     memoize :find_layout
 
@@ -54,12 +54,12 @@ module RHR
       file.sub!(/\/$/,'')
       is_root = (file == '')
 
-      return if not is_root and not @files.index(file)
+      return if not is_root and not @servable_files.index(file)
 
       if is_root or File.directory?(file)
         # folder -> find an index file
         file << '/' unless is_root
-        @files.grep(/^#{Regexp.escape file}index\.[^\/]+$/).first
+        @servable_files.grep(/^#{Regexp.escape file}index\.[^\/]+$/).first
       else
         # just another normal template
         file
