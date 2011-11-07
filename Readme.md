@@ -46,6 +46,7 @@ TODO (fork!)
 ====
  - do not use layout if view does something like `no_layout`
  - add helpers like link_to / tag / form
+ - move params and request to the View
  - escape html in params <-> xss
 
 Author
