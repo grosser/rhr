@@ -4,7 +4,8 @@ require 'rhr/core_ext/object'
 module RHR
   class Server
     def initialize
-      @files = Dir["**/*"] - %w[Gemfile Gemfile.lock Rakefile helpers.rb]
+      @all_files = Dir["**/*"]
+      @files = @all_files - %w[Gemfile Gemfile.lock Rakefile helpers.rb]
       @files -= @files.grep(/(^|\/)_/)
     end
 
@@ -15,11 +16,7 @@ module RHR
           request = Rack::Request.new(env)
           params = request.GET.merge(request.POST)
 
-          helpers_path = find_helpers
-          require(helpers_path) if helpers_path
-          view = View.new
-          view.send(:extend, Helpers) if defined?(Helpers)
-
+          view = build_view
           body = renderer.new(template).render(view, :request => request, :params => params)
 
           if layout = find_layout
@@ -37,10 +34,14 @@ module RHR
 
   private
 
-    def find_helpers
-      Dir['*'].grep(/^helpers.rb$/).first
+    def build_view
+      view = View.new
+      if @all_files.include?('helpers.rb')
+        require './helpers'
+        view.send(:extend, Helpers)
+      end
+      view
     end
-    memoize :find_helpers
 
     def find_layout
       Dir['*'].grep(/^_layout(\.|$)/).first
