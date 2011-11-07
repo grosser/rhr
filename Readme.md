@@ -27,14 +27,13 @@ Layouting
       <body><%= yield %></body>
     </html>
 
-Custom Helpers
-==============
+Helpers
+=======
 
-Put a `helpers.rb` file into the root of the project to get access to custom helpers in the view.
-The file should define the `Helpers` class and all methods as class methods:
+Put a `helpers.rb` file into the project root:
 
-    class Helpers
-      def self.foo
+    module Helpers
+      def foo
         'bar'
       end
     end
@@ -42,11 +41,6 @@ The file should define the `Helpers` class and all methods as class methods:
 You can now use the `foo` method in the view:
 
     <div><%= foo %></div>
-
-==>
-
-    <div>bar</div>
-
 
 TODO (fork!)
 ====
