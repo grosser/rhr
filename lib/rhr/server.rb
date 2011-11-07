@@ -4,7 +4,7 @@ require 'rhr/core_ext/object'
 module RHR
   class Server
     def initialize
-      @files = Dir["**/*"] - ['Gemfile','Gemfile.lock','Rakefile']
+      @files = Dir["**/*"] - %w[Gemfile Gemfile.lock Rakefile helpers.rb]
       @files -= @files.grep(/(^|\/)_/)
     end
 

@@ -79,6 +79,14 @@ describe RHR do
       last_response.content_type.should == 'image/jpeg'
     end
 
+    %w[Rakefile Gemfile Gemfile.lock helpers.rb].each do |file|
+      it "ignores #{file}" do
+        write file, 'Foo'
+        get "/#{file}"
+        last_response.status.should == 404
+      end
+    end
+
     it "ignores common ruby files" do
       get "/Gemfile"
       last_response.status.should == 404
