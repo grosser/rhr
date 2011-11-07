@@ -1,3 +1,4 @@
+require 'rhr/view'
 require 'rhr/core_ext/object'
 
 module RHR
@@ -16,8 +17,10 @@ module RHR
 
           helpers_path = find_helpers
           require(helpers_path) if helpers_path
+          view = View.new
+          view.send(:extend, Helpers) if defined?(Helpers)
 
-          body = renderer.new(template).render(defined?(Helpers) ? Helpers : nil, :request => request, :params => params)
+          body = renderer.new(template).render(view, :request => request, :params => params)
 
           if layout = find_layout
             body = renderer.new(layout).render(defined?(Helpers) ? Helpers : nil, :request => request, :params => params) { body }

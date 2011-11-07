@@ -135,7 +135,7 @@ describe RHR do
 
     describe 'with helpers' do
       it 'passes helpers into the view' do
-        write 'helpers.rb', 'class Helpers; def self.foo; "hallo"; end; end'
+        write 'helpers.rb', 'module Helpers; def foo; "hallo"; end; end'
         get "/helpers.erb"
         last_response.body.should == 'hallo'
       end
