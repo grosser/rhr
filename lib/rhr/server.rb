@@ -14,10 +14,13 @@ module RHR
           request = Rack::Request.new(env)
           params = request.GET.merge(request.POST)
 
-          body = renderer.new(template).render(nil, :request => request, :params => params)
+          helpers_path = find_helpers
+          require(helpers_path) if helpers_path
+
+          body = renderer.new(template).render(defined?(Helpers) ? Helpers : nil, :request => request, :params => params)
 
           if layout = find_layout
-            body = renderer.new(layout).render(nil, :request => request, :params => params) { body }
+            body = renderer.new(layout).render(defined?(Helpers) ? Helpers : nil, :request => request, :params => params) { body }
           end
 
           [200, {}, [body]]
@@ -30,6 +33,11 @@ module RHR
     end
 
   private
+
+    def find_helpers
+      Dir['*'].grep(/^helpers.rb$/).first
+    end
+    memoize :find_helpers
 
     def find_layout
       Dir['*'].grep(/^_layout(\.|$)/).first
