@@ -23,7 +23,7 @@ module RHR
           body = renderer.new(template).render(view, :request => request, :params => params)
 
           if layout = find_layout
-            body = renderer.new(layout).render(defined?(Helpers) ? Helpers : nil, :request => request, :params => params) { body }
+            body = renderer.new(layout).render(view, :request => request, :params => params) { body }
           end
 
           [200, {}, [body]]

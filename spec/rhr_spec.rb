@@ -134,10 +134,20 @@ describe RHR do
     end
 
     describe 'with helpers' do
+      before do
+        write 'helpers.erb', '<%= foo %>'
+        write 'helpers.rb', 'module Helpers; def foo; "hello"; end; end'
+      end
+
       it 'passes helpers into the view' do
-        write 'helpers.rb', 'module Helpers; def foo; "hallo"; end; end'
         get "/helpers.erb"
-        last_response.body.should == 'hallo'
+        last_response.body.should == 'hello'
+      end
+
+      it 'passes helpers into the layout view' do
+        write '_layout.erb', '<%= foo %>|<%= yield %>'
+        get "/helpers.erb"
+        last_response.body.should == 'hello|hello'
       end
     end
   end
