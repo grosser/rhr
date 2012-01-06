@@ -1,3 +1,5 @@
+**Update** Try [rack-server-pages](https://github.com/migrs/rack-server-pages) instead (more features/more docs/same aproach)
+
 Ruby Hypertext Refinement -- the ease of PHP with the elegance of Ruby
 
 Install
